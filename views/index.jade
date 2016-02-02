@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  #container.container
+    #shout.jumbotron
+      h1
+        img(src='/images/logo.png', alt='#{title}').respond
+      p Welcome to #{title}
+
+      p Ever wanted to compare steps with your Dad but oh noes he has the cheapy step counter. Well this is a place you can compare step counts from various different wearables.
+
+      p Initally it will be for Fitbit, Mistfit and Withings. If there is demand for more we'll add them :)
+      
+      h2.text-center Coming soon!
+            
+      #form.container.text-center.well(style='margin-bottom:0')
+        form(action='/signup',method='post').form-inline    
+          #email-group.form-group.col-sm-12
+            input(type='email', name="email", placeholder='Enter your email for updates', value='')#email.email-input.form-control
+            input(type='submit', value='Sign me up!')#sign-up.form-control
+            
+    -if(messages.length > 0)
+      #note.alert.alert-success(role='alert')
+        #message #{messages}        

@@ -1,0 +1,25 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+@media only screen and (min-width : 320px) {
+  .respond {
+    width: 100%;
+  }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+  .respond {
+    width: auto;
+  }
+}
+
+no-bottom-margin {
+  margin-bottom: 0;
+}
