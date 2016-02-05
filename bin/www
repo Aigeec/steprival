@@ -3,31 +3,35 @@
 /**
  * Module dependencies.
  */
-
-var app = require('../app');
 var debug = require('debug')('steprival:server');
 var http = require('http');
-
-/**
- * Get port from environment and store in Express.
- */
-
+var startup = require('../startup');
 var port = normalizePort(process.env.PORT || '3000');
-app.set('port', port);
 
-/**
- * Create HTTP server.
- */
+var server;
 
-var server = http.createServer(app);
+startup().done(function() {
+  var app = require('../app');
+  /**
+   * Get port from environment and store in Express.
+   */
 
-/**
- * Listen on provided port, on all network interfaces.
- */
+  app.set('port', port);
 
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+  /**
+   * Create HTTP server.
+   */
+
+  server = http.createServer(app);
+
+  /**
+   * Listen on provided port, on all network interfaces.
+   */
+
+  server.listen(port);
+  server.on('error', onError);
+  server.on('listening', onListening);
+});
 
 /**
  * Normalize a port into a number, string, or false.
