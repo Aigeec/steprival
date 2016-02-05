@@ -8,6 +8,8 @@ var flash = require('connect-flash');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var api = require('./routes/api');
+
 var passport = require('passport');
 
 var session = require('express-session');
@@ -57,6 +59,7 @@ app.get('/auth/misfit/callback',
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/api', api);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
