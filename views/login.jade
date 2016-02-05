@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  #container.container          
+    -if(messages.length > 0)
+      #note.alert.alert-success(role='alert')
+        #message #{messages}        
+    
+    #login.row
+      p
+        a(href='/auth/fitbit') Login with Fitbit      
+      p 
+        a(href='/auth/misfit') Login with Mistfit

@@ -12,4 +12,8 @@ router.post('/signup', function(req, res) {
   res.redirect('/');
 });
 
+router.get('/login', function(req, res) {
+  res.render('login', { messages: req.flash('info') });
+});
+
 module.exports = router;
