@@ -1,0 +1,25 @@
+var passport = require('passport');
+var express = require('express');
+var router = express.Router();
+
+router.get('/fitbit', passport.authenticate('fitbit'));
+
+router.get('/fitbit/callback',
+  passport.authenticate('fitbit', { failureRedirect: '/login' }),
+  function(req, res) {
+    console.log(req);
+    res.redirect('/');
+  }
+);
+
+router.get('/misfit', passport.authenticate('misfit'));
+
+router.get('/misfit/callback',
+  passport.authenticate('misfit', { failureRedirect: '/login' }),
+  function(req, res) {
+    console.log(req);
+    res.redirect('/');
+  }
+);
+
+module.exports = router;

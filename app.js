@@ -9,6 +9,7 @@ var flash = require('connect-flash');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var api = require('./routes/api');
+var auth = require('./routes/auth');
 
 var passport = require('passport');
 
@@ -33,30 +34,7 @@ app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(flash());
 app.use(session({ secret: 'keyboard cat', resave: true, saveUninitialized: true, store: new MongoStore({ db: db }) }));
 
-app.get('/auth/fitbit',
-  passport.authenticate('fitbit'));
-
-app.get('/auth/fitbit/callback',
-
-  // passport.authenticate('fitbit', { failureRedirect: '/login' }),
-  function(req, res) {
-    console.log(req);
-    res.redirect('/');
-  }
-);
-
-app.get('/auth/misfit',
-  passport.authenticate('misfit'));
-
-app.get('/auth/misfit/callback',
-
-  // passport.authenticate('misfit', { failureRedirect: '/login' }),
-  function(req, res) {
-    console.log(req);
-    res.redirect('/');
-  }
-);
-
+app.use('/auth', auth);
 app.use('/', routes);
 app.use('/users', users);
 app.use('/api', api);

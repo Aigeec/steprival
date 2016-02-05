@@ -11,11 +11,12 @@ var handleResponse = function(accessToken, refreshToken, profile, done) {
 
 var fitbit = new OAuth2Strategy(
   {
-    authorizationURL: 'https://www.fitbit.com/oauth2/authorize ',
+    authorizationURL: 'https://www.fitbit.com/oauth2/authorize',
     tokenURL: 'https://api.fitbit.com/oauth2/token',
     clientID: process.env.FITBIT_ID,
     clientSecret: process.env.FITBIT_SECRET,
     callbackURL: 'https://steprival.com/auth/fitbit/callback',
+    scope: 'profile activity',
   },
   handleResponse);
 
