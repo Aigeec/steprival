@@ -8,10 +8,13 @@ var flash = require('connect-flash');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var passport = require('passport');
+
+var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
+var db = require('./startup/mongodb').get();
 
 var app = express();
-
-var passport = require('passport');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -26,29 +29,31 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(flash());
-app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
+app.use(session({ secret: 'keyboard cat', resave: true, saveUninitialized: true, store: new MongoStore({ db: db }) }));
 
-// app.use(passport.initialize());
-// app.use(passport.session());
-//
-// passport.use(new FitbitStrategy({
-//     consumerKey: FITBIT_CONSUMER_KEY,
-//     consumerSecret: FITBIT_CONSUMER_SECRET,
-//     callbackURL: "http://127.0.0.1:3000/auth/fitbit/callback"
-//   },
-//   function(token, tokenSecret, profile, done) {
-//     User.findOrCreate({ fitbitId: profile.id }, function (err, user) {
-//       return done(err, user);
-//     });
-//   }
-// ));
-//
-// app.post('/login',
-//   passport.authenticate('local', { failureRedirect: '/login' }),
-//   function(req, res) {
-//     res.redirect('/');
-//   }
-// );
+app.get('/auth/fitbit',
+  passport.authenticate('fitbit'));
+
+app.get('/auth/fitbit/callback',
+
+  // passport.authenticate('fitbit', { failureRedirect: '/login' }),
+  function(req, res) {
+    console.log(req);
+    res.redirect('/');
+  }
+);
+
+app.get('/auth/misfit',
+  passport.authenticate('misfit'));
+
+app.get('/auth/misfit/callback',
+
+  // passport.authenticate('misfit', { failureRedirect: '/login' }),
+  function(req, res) {
+    console.log(req);
+    res.redirect('/');
+  }
+);
 
 app.use('/', routes);
 app.use('/users', users);
