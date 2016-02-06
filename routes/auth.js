@@ -8,7 +8,7 @@ router.get('/fitbit/callback',
   passport.authenticate('fitbit', { failureRedirect: '/login' }),
   function(req, res) {
     console.log(req);
-    res.redirect('/user');
+    res.redirect('/users');
   }
 );
 
@@ -18,7 +18,7 @@ router.get('/misfit/callback',
   passport.authenticate('misfit', { failureRedirect: '/login' }),
   function(req, res) {
     console.log(req);
-    res.redirect('/user');
+    res.redirect('/users');
   }
 );
 
