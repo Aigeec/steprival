@@ -5,18 +5,23 @@ var mongodb = require('./mongodb');
 var db;
 
 var handleFitbitResponse = function(accessToken, refreshToken, profile, done) {
+
+  var user = {
+    _id: profile.id,
+    displayName:profile.displayName,
+    provider: profile.provider,
+    profile: profile._json,
+    accessToken: accessToken,
+    refreshToken: refreshToken,
+  };
+
   db.collection('user').update(
-      { _id: profile.id },
-      {
-        _id: profile.id,
-        displayName:profile.displayName,
-        provider: profile.provider,
-        profile: profile._json,
-        accessToken: accessToken,
-        refreshToken: refreshToken,
-      },
+      { _id: user._id },
+      user,
       { upsert: true },
-      done
+      function(err, records) {
+        done(err, user);
+      }
     );
 };
 
