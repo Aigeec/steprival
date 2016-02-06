@@ -1,12 +1,26 @@
 var passport = require('passport');
 var OAuth2Strategy = require('passport-oauth2').Strategy;
-var FitbitStrategy = require('passport-fitbit-oauth2').FitbitOAuth2Strategy;;
+var FitbitStrategy = require('passport-fitbit-oauth2').FitbitOAuth2Strategy;
+var db = require('./mongodb');
 
-var handleResponse = function(accessToken, refreshToken, profile, done) {
-  //create user here and return via done
-  console.log('accessToken:', accessToken);
-  console.log('refreshToken:', refreshToken);
-  console.log('profile:', profile);
+var handleFitbitResponse = function(accessToken, refreshToken, profile, done) {
+  db.collection('users')
+    .update(
+      { _id: profile.id },
+      {
+        _id: profile.id,
+        displayName:profile.displayName,
+        provider: profile.provider,
+        profile: profile._json,
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+      },
+      { upsert: true },
+      done
+    );
+};
+
+var handleResponse  = function(accessToken, refreshToken, profile, done) {
   done();
 };
 
@@ -16,7 +30,7 @@ var fitbit = new FitbitStrategy(
     clientSecret: process.env.FITBIT_SECRET,
     callbackURL: 'https://steprival.com/auth/fitbit/callback',
   },
-  handleResponse
+  handleFitbitResponse
 );
 
 var misfit = new OAuth2Strategy(
