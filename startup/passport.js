@@ -4,8 +4,7 @@ var FitbitStrategy = require('passport-fitbit-oauth2').FitbitOAuth2Strategy;
 var db = require('./mongodb');
 
 var handleFitbitResponse = function(accessToken, refreshToken, profile, done) {
-  db.collection('users')
-    .update(
+  db.user.update(
       { _id: profile.id },
       {
         _id: profile.id,
