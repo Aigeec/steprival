@@ -1,7 +1,8 @@
 var passport = require('passport');
 var OAuth2Strategy = require('passport-oauth2').Strategy;
 var FitbitStrategy = require('passport-fitbit-oauth2').FitbitOAuth2Strategy;
-var db = require('./mongodb').get();
+var mongodb = require('./mongodb');
+var db;
 
 var handleFitbitResponse = function(accessToken, refreshToken, profile, done) {
   db.collection('user').update(
@@ -46,6 +47,7 @@ var misfit = new OAuth2Strategy(
 misfit.name = 'misfit';
 
 var setup = function() {
+  db = mongodb.get();
   passport.use(fitbit);
   passport.use(misfit);
 };
