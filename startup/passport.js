@@ -61,7 +61,7 @@ var setup = function() {
   });
 
   passport.deserializeUser(function(id, done) {
-    db.collection('user').find({ _id: id }, function(err, user) {
+    db.collection('user').findOne({ _id: id }, function(err, user) {
       done(err, user);
     });
   });
