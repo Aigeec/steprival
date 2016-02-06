@@ -7,7 +7,6 @@ router.get('/fitbit', passport.authenticate('fitbit', { scope: ['profile', 'acti
 router.get('/fitbit/callback',
   passport.authenticate('fitbit', { failureRedirect: '/login' }),
   function(req, res) {
-    console.log(req);
     res.redirect('/users');
   }
 );
@@ -17,7 +16,6 @@ router.get('/misfit', passport.authenticate('misfit'));
 router.get('/misfit/callback',
   passport.authenticate('misfit', { failureRedirect: '/login' }),
   function(req, res) {
-    console.log(req);
     res.redirect('/users');
   }
 );
