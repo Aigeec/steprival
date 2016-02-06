@@ -32,7 +32,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(flash());
-app.use(session({ secret: 'keyboard cat', resave: true, saveUninitialized: true, store: new MongoStore({ db: db }) }));
+app.use(session({ secret: process.env.SESSION_SECRET, resave: true, saveUninitialized: true, store: new MongoStore({ db: db }) }));
 app.use(passport.initialize());
 app.use(passport.session());
 
