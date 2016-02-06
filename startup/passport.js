@@ -57,11 +57,11 @@ var setup = function() {
   passport.use(misfit);
 
   passport.serializeUser(function(user, done) {
-    done(null, user.id);
+    done(null, user._id);
   });
 
   passport.deserializeUser(function(id, done) {
-    db.collection('user').find({ id: id }, function(err, user) {
+    db.collection('user').find({ _id: id }, function(err, user) {
       done(err, user);
     });
   });
