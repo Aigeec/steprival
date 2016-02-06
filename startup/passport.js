@@ -50,6 +50,16 @@ var setup = function() {
   db = mongodb.get();
   passport.use(fitbit);
   passport.use(misfit);
+
+  passport.serializeUser(function(user, done) {
+    done(null, user.id);
+  });
+
+  passport.deserializeUser(function(id, done) {
+    db.collection('user').find({ id: id }, function(err, user) {
+      done(err, user);
+    });
+  });
 };
 
 module.exports.setup = setup;
