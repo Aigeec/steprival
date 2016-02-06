@@ -1,10 +1,10 @@
 var passport = require('passport');
 var OAuth2Strategy = require('passport-oauth2').Strategy;
 var FitbitStrategy = require('passport-fitbit-oauth2').FitbitOAuth2Strategy;
-var db = require('./mongodb');
+var db = require('./mongodb').get();
 
 var handleFitbitResponse = function(accessToken, refreshToken, profile, done) {
-  db.user.update(
+  db.collection('user').update(
       { _id: profile.id },
       {
         _id: profile.id,
