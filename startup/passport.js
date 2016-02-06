@@ -4,8 +4,8 @@ var OAuth2Strategy = require('passport-oauth2').Strategy;
 var handleResponse = function(accessToken, refreshToken, profile, done) {
   //create user here and return via done
   console.log('accessToken:', accessToken);
-  console.log('refreshToken:', accessToken);
-  console.log('profile:', accessToken);
+  console.log('refreshToken:', refreshToken);
+  console.log('profile:', profile);
   done(err);
 };
 
@@ -16,6 +16,9 @@ var fitbit = new OAuth2Strategy(
     clientID: process.env.FITBIT_ID,
     clientSecret: process.env.FITBIT_SECRET,
     callbackURL: 'https://steprival.com/auth/fitbit/callback',
+    customHeaders: {
+      Authorization:  'Basic ' + new Buffer(process.env.FITBIT_ID + ':' + process.env.FITBIT_SECRET).toString('base64'),
+    },
     scope: 'profile activity',
   },
   handleResponse);
