@@ -1,29 +1,23 @@
 var passport = require('passport');
 var OAuth2Strategy = require('passport-oauth2').Strategy;
+var FitbitStrategy = require('passport-fitbit-oauth2').FitbitOAuth2Strategy;;
 
 var handleResponse = function(accessToken, refreshToken, profile, done) {
   //create user here and return via done
   console.log('accessToken:', accessToken);
   console.log('refreshToken:', refreshToken);
   console.log('profile:', profile);
-  done(err);
+  done();
 };
 
-var fitbit = new OAuth2Strategy(
+var fitbit = new FitbitStrategy(
   {
-    authorizationURL: 'https://www.fitbit.com/oauth2/authorize',
-    tokenURL: 'https://api.fitbit.com/oauth2/token',
     clientID: process.env.FITBIT_ID,
     clientSecret: process.env.FITBIT_SECRET,
     callbackURL: 'https://steprival.com/auth/fitbit/callback',
-    customHeaders: {
-      Authorization:  'Basic ' + new Buffer(process.env.FITBIT_ID + ':' + process.env.FITBIT_SECRET).toString('base64'),
-    },
-    scope: 'profile activity',
   },
-  handleResponse);
-
-fitbit.name = 'fitbit';
+  handleResponse
+);
 
 var misfit = new OAuth2Strategy(
   {

@@ -2,7 +2,7 @@ var passport = require('passport');
 var express = require('express');
 var router = express.Router();
 
-router.get('/fitbit', passport.authenticate('fitbit'));
+router.get('/fitbit', passport.authenticate('fitbit', { scope: ['profile', 'activity'] }));
 
 router.get('/fitbit/callback',
   passport.authenticate('fitbit', { failureRedirect: '/login' }),
