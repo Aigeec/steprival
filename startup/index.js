@@ -4,8 +4,9 @@ var passport = require('./passport');
 var db = require('./mongodb');
 
 var setup = function() {
-  passport.setup();
-  return db.connect();
+  return db.connect().then(function() {
+    passport.setup();
+  });
 };
 
 module.exports = setup;
