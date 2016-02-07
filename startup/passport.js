@@ -25,7 +25,7 @@ var handleFitbitResponse = function(accessToken, refreshToken, profile, done) {
     );
 };
 
-var handleResponse  = function(accessToken, refreshToken, profile, done) {
+var handleMisfitResponse  = function(accessToken, refreshToken, profile, done) {
   done();
 };
 
@@ -38,15 +38,13 @@ var fitbit = new FitbitStrategy(
   handleFitbitResponse
 );
 
-var misfit = new OAuth2Strategy(
+var misfit = new MisfitStrategy(
   {
-    authorizationURL: 'https://api.misfitwearables.com/auth/dialog/authorize',
-    tokenURL: 'https://api.misfitwearables.com/auth/tokens/exchange',
     clientID: process.env.MISFIT_ID,
     clientSecret: process.env.MISFIT_SECRET,
     callbackURL: 'https://steprival.com/auth/misfit/callback',
   },
-  handleResponse
+  handleMisfitResponse
 );
 
 misfit.name = 'misfit';
