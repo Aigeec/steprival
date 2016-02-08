@@ -1,6 +1,6 @@
 var passport = require('passport');
 var FitbitStrategy = require('passport-fitbit-oauth2').FitbitOAuth2Strategy;
-var MisfitStrategy = require('passport-misfit').Strategy
+var MisfitStrategy = require('passport-misfit').Strategy;
 
 var mongodb = require('./mongodb');
 var db;
@@ -21,11 +21,14 @@ var handleFitbitResponse = function(accessToken, refreshToken, profile, done) {
 
 var handleMisfitResponse  = function(accessToken, refreshToken, profile, done) {
 
+  delete profile._json;
+  delete profile._raw;
+
   var user = {
     _id: profile.userId,
     displayName:profile.name,
     provider: profile.provider,
-    profile: profile._json,
+    profile: profile,
     accessToken: accessToken,
     refreshToken: refreshToken,
   };
@@ -34,7 +37,7 @@ var handleMisfitResponse  = function(accessToken, refreshToken, profile, done) {
 
 };
 
-var persistUser = function(user, done){
+var persistUser = function(user, done) {
   db.collection('user').update(
     { _id: user._id },
     user,
@@ -43,7 +46,7 @@ var persistUser = function(user, done){
       done(err, user);
     }
   );
-}
+};
 
 var fitbit = new FitbitStrategy(
   {
@@ -59,7 +62,7 @@ var misfit = new MisfitStrategy(
     clientID: process.env.MISFIT_ID,
     clientSecret: process.env.MISFIT_SECRET,
     callbackURL: 'https://steprival.com/auth/misfit/callback',
-    scope: 'public,birthday,email'
+    scope: 'public,birthday,email',
   },
   handleMisfitResponse
 );
