@@ -4,20 +4,20 @@ var router = express.Router();
 
 router.get('/fitbit', passport.authenticate('fitbit', { scope: ['profile', 'activity'] }));
 
+var directToUsersPage = function(req, res) {
+  res.redirect('/user/' + req.user._id);
+};
+
 router.get('/fitbit/callback',
   passport.authenticate('fitbit', { failureRedirect: '/login' }),
-  function(req, res) {
-    res.redirect('/users');
-  }
+  directToUsersPage
 );
 
 router.get('/misfit', passport.authenticate('misfit'));
 
 router.get('/misfit/callback',
   passport.authenticate('misfit', { failureRedirect: '/login' }),
-  function(req, res) {
-    res.redirect('/users');
-  }
+  directToUsersPage
 );
 
 module.exports = router;
