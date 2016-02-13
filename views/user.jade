@@ -9,4 +9,6 @@ block content
     #logged-in.row
       -if(user)
         #username
+          -if(user.profile.avatar)
+            img(src=user.profile.avatar)
           p Welcome #{user.displayName}!
