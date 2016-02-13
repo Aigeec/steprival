@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 var flash = require('connect-flash');
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
+var user = require('./routes/user');
 var api = require('./routes/api');
 var auth = require('./routes/auth');
 
@@ -36,10 +36,19 @@ app.use(session({ secret: process.env.SESSION_SECRET, resave: true, saveUninitia
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/auth', auth);
 app.use('/', routes);
-app.use('/users', users);
+app.use('/auth', auth);
 app.use('/api', api);
+
+app.use(function(req, res, next) {
+  if (!req.user) {
+    res.redirect('/login');
+  }else {
+    next();
+  }
+});
+
+app.use('/user', user);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
