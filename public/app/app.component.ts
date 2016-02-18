@@ -40,15 +40,8 @@ import {HTTP_PROVIDERS}    from 'angular2/http';
 ])
 
 @Component({
-  selector: 'my-app',
-  template:`
-    <h1>{{title}}</h1>
-    <nav>
-      <a [routerLink]="['Dashboard']">Dashboard</a>
-      <a [routerLink]="['Rivalries']">Rivalries</a>
-    </nav>
-    <router-outlet></router-outlet>
-  `,
+  selector: 'sr-app',
+  templateUrl:'/templates/app.component.html',
   directives: [ROUTER_DIRECTIVES],
   providers: [
     HTTP_PROVIDERS,
@@ -56,7 +49,12 @@ import {HTTP_PROVIDERS}    from 'angular2/http';
     UserService,
     RivalryService
   ],
-  styleUrls: ['../css/app.component.css']
+  styles: [`
+    .navbar-default .navbar-nav > li > a.router-link-active {
+      color: #555;
+      background-color: #e7e7e7;
+    }
+  `]
 })
 export class AppComponent {
   title = 'Steprival';
