@@ -1,15 +1,35 @@
 extends layout
 
+block append head
+  base(href="/user/#{user._id}")
+
 block content
   #container.container          
     -if(messages.length > 0)
       #note.alert.alert-success(role='alert')
         #message #{messages}        
-    
-    #logged-in.row
-      -if(user)
-        #username
-          -if(user.profile.avatar)
-            img(src=user.profile.avatar)
-          p Welcome #{user.displayName}!
-          my-app Loading...
+      
+  #logged-in.row
+    sr-app Loading Step Rivals app...
+
+block append scripts
+  <!-- IE required polyfill -->
+  script(src="/js/es6-shim.min.js")
+  script(src="/js/system-polyfills.js")      
+  script(src="/js/angular2-polyfills.js")
+  script(src="/js/system.js")
+  script(src="/js/Rx.min.js")
+  script(src="/js/angular2.dev.js")
+  script(src="/js/router.dev.js")
+  script(src="/js/http.dev.js")
+  script(type="text/javascript").
+    System.config({
+      packages: {        
+        '/build': {
+          format: 'register',
+          defaultExtension: 'js'
+        }
+      }
+    });
+    System.import('/build/main')
+          .then(null, console.error.bind(console));          
