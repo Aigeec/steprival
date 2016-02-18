@@ -7,7 +7,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "DEBUG=steprival:* node ./bin/www",
-    "env": "env.sh"
+    "postinstall": "npm run typings install",
+    "tsc": "tsc",
+    "tsc:w": "tsc -w",
+    "typings" : "typings"
   },
   "repository": {
     "type": "git",
@@ -39,9 +42,17 @@
     "passport-fitbit-oauth2": "^1.0.1",
     "passport-misfit": "^0.1.0",
     "passport-oauth2": "~1.1.2",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+    "es6-promise": "~3.1.2",
+    "es6-shim": "~0.33.13",
+    "reflect-metadata": "~0.1.2",
+    "zone.js": "~0.5.14",
+    "rxjs": "~5.0.0-beta.0",
+    "angular2": "~2.0.0-beta.6",
+    "systemjs": "0.19.20"
   },
-  "devDependencies": {
-    "node-env-file": "^0.1.8"
+  "devDependencies": {    
+    "typescript": "^1.7.5",
+    "typings":"^0.6.8"
   }
 }
