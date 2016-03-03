@@ -4,7 +4,7 @@ var db = require('../../startup/mongodb').get();
 var Promise = require('bluebird');
 
 router.get('/fitbit',
-  function(req, res, next) {
+  function (req, res, next) {
     if (req.query.verify === 'ecc7e5e6c0370d5d0067d98ea06c8fac93440f412ea5653adf277fb02b2f90e2') {
       res.sendStatus(204);
     } else {
@@ -14,40 +14,40 @@ router.get('/fitbit',
 );
 
 router.post('/fitbit',
-  function(req, res, next) {
+  function (req, res, next) {
     processMessages(req.body, res);
   }
 );
 
 /* GET users listing. */
 router.post('/misfit',
-  function(req, res, next) {
+  function (req, res, next) {
     processMessages(req.body.Messages, res);
   }
 );
 
-var processMessages = function(messages, res) {
+var processMessages = function (messages, res) {
   var promises = messages.map(processMessage);
   respondOnCompletion(promises, res);
 };
 
-var respondOnCompletion = function(res, promises) {
+var respondOnCompletion = function (res, promises) {
   Promise.all(promises).then(
-    function() {
+    function () {
       res.sendStatus(204);
     }
-  ).catch(function() {
+  ).catch(function () {
     res.sendStatus(500);
   });
 };
 
-var processMessage = function(message) {
+var processMessage = function (message) {
 
   var deferred = Promise.defer();
 
   db.collection('data').insert(
     message,
-      function(err, records) {
+      function (err, records) {
         resolve(deferred, err, records);
       }
     );
@@ -55,7 +55,7 @@ var processMessage = function(message) {
   return deferred.promise;
 };
 
-var resolve = function(deferred, err, data) {
+var resolve = function (deferred, err, data) {
   if (err) {
     deferred.reject(err);
   } else {
