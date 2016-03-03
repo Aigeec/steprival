@@ -21,7 +21,7 @@ var processMessages = function(messages, res){
     respondOnCompletion(promises, res);
 }
 
-var respondOnCompletion = function(res, promises){
+var respondOnCompletion = function(promises, res){
   Promise.all(promises).then(
     function(){
       res.sendStatus(204);
