@@ -1,0 +1,9 @@
+<div *ngIf="rivalry">
+  <h2>{{rivalry.name}} details!</h2>
+  <div><label>id: </label>{{rivalry.id}}</div>
+  <div>
+    <label>name: </label>
+    <input [(ngModel)]="rivalry.name" placeholder="name"/>
+  </div>
+  <button (click)="goBack()">Back</button>
+</div>
