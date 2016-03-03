@@ -27,8 +27,9 @@ router.post('',
   function (req, res, next) {
     db.collection(req.collection).insert(
       req.body, function (err, result) {
-      defaultResponse(err, res);
-    });
+        console.log(result);
+        defaultResponse(err, result, res);
+      });
   }
 );
 
@@ -37,17 +38,17 @@ router.put('/:itemId',
     db.collection(req.collection).update({
         _id: new ObjectID(req.params.itemId),
       }, req.body, function (err, result) {
-      defaultResponse(err, res);
+      defaultResponse(err, result, res);
     });
   }
 );
 
-function defaultResponse(err, res) {
+function defaultResponse(err, result, res) {
   if (err) {
     console.error('Error processing REST req: ', err);
     res.sendStatus(500);
   } else {
-    res.sendStatus(204);
+    res.json(result.ops[0]);
   }
 }
 

@@ -9,6 +9,17 @@ router.use(function (req, res, next) {
   next();
 });
 
+router.post('',
+  function (req, res, next) {
+    if (!req.body.users) {
+      req.body.users = [];
+      req.body.users.push({ _id: req.user._id, displayName: req.user.displayName });
+    }
+
+    next();
+  }
+);
+
 router.use(rest);
 
 module.exports = router;
